@@ -66,7 +66,11 @@ resource "aws_instance" "my-ubuntu-instance" {
   key_name               = aws_key_pair.my-key-pair[each.key].key_name   # interpolation
   vpc_security_group_ids = [aws_default_security_group.my-default-sg.id] # interpolation
 
-  user_data_base64 = each.key == "control-ubuntu" ? file("${path.module}/../../installation/install-ansible.sh") : null # conditionally apply user_data
+  user_data_base64 = (
+    each.value.os_type == "ubuntu" ? filebase64("${path.module}/../../installation/install-ansible.sh") :
+    each.value.os_type == "redhat" ? filebase64("${path.module}/../../installation/install-python.sh") : 
+    null
+  )
 
   root_block_device {
     volume_size = var.env == "prd" ? 10 : var.ec2-root-storage-size # if condition ? then : else variable referenced

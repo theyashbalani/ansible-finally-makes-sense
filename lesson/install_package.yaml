@@ -1,0 +1,71 @@
+---
+
+- name: Setup Docker
+  hosts: servers
+  become: yes  # sudo access granted
+  gather_facts: true # fetch metadat of the servers
+
+  tasks:
+    - name: Upgrade all the Packages in Ubuntu
+      apt:
+        name: "*"
+        state: latest
+      when: ansible_facts["distribution"] == "Ubuntu" # if condition check
+    - name: Add Docker Repository for Ubuntu
+      deb822_repository:
+        name: docker
+        types: deb
+        uris: https://download.docker.com/linux/ubuntu
+        suites: "{{ ansible_facts['distribution_release'] }}" # shell like syntax for getting facts in Ansible
+        components: stable
+        signed_by: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+        enabled: yes
+      when: ansible_facts["distribution"] == "Ubuntu"
+    - name: Install Docker in Ubuntu
+      apt:
+        name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
+        state: present
+      when: ansible_facts["distribution"] == "Ubuntu"
+#############
+    - name: Upgrade all the Packages in RedHat
+      dnf:
+        name: "*"
+        state: latest
+      when: ansible_facts["distribution"] == "RedHat"
+    - name: Add Docker Repository for RedHat
+      #command: "curl -fsSL https://download.docker.com/linux/centos/docker-ce.repo"
+      get_url:  # used to download files from the internet
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo # it will create the repo file in the destination path 
+      when: ansible_facts["distribution"] == "RedHat"
+    - name: Install Docker in RedHat
+      dnf:
+        name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
+        state: latest
+      when: ansible_facts["distribution"] == "RedHat"
+##################
+    - name: Upgrade all the Packages in Amazon Linux
+      dnf:
+        name: "*"
+        state: latest
+      when: ansible_facts["distribution"] == "Amazon"
+    - name: Install Docker in Amazon Linux
+      dnf:
+        name: docker
+        state: latest
+      when: ansible_facts["distribution"] == "Amazon"
+
+
+
+    

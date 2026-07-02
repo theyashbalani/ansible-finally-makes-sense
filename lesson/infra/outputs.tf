@@ -10,16 +10,22 @@
 
 # Output for for_each
 output "ec2-public-ip" {
-    value = [
-        for instance in aws_instance.my-ubuntu-instance:        # for loop
-        instance.public_ip
-    ]
+  value = [
+    for n, instance in aws_instance.my-ubuntu-instance : {
+      name      = n
+      public_ip = instance.public_ip
+      user      = local.ec2-instance_type[n].user
+    }
+  ]
 }
 
 output "ec2-public-dns" {
-    value = [
-        for instance in aws_instance.my-ubuntu-instance:         # for loop
-        instance.public_dns
-    ]
+  value = [
+    for name, instance in aws_instance.my-ubuntu-instance : {
+      name       = name
+      public_dns = instance.public_dns
+      user       = local.ec2-instance_type[name].user
+    }
+  ]
 }
 

@@ -11,13 +11,13 @@
 
 locals {
   ec2-instance_type = {
-    control-ubuntu = {
-      ami           = data.aws_ami.ubuntu.id
-      user          = "ubuntu"
-      os_type       = "ubuntu"
-      instance_type = "t2.micro"
-      ssh_key       = file("control-node.pub")
-    }
+    # control-ubuntu = {
+    #   ami           = data.aws_ami.ubuntu.id
+    #   user          = "ubuntu"
+    #   os_type       = "ubuntu"
+    #   instance_type = "t2.micro"
+    #   ssh_key       = file("control-node.pub")
+    # }
     worker-ubuntu = {
       ami           = data.aws_ami.ubuntu.id
       user          = "ubuntu"
@@ -27,14 +27,14 @@ locals {
     }
     worker-redhat = {
       ami           = data.aws_ami.redhat.id
-      user          = "redhat"
+      user          = "ec2-user"
       os_type       = "redhat"
       instance_type = "t2.micro"
       ssh_key       = file("worker-node.pub")
     }
     worker-amazon = {
       ami           = data.aws_ami.amazon.id
-      user          = "amazon"
+      user          = "ec2-user"
       os_type       = "amazon"
       instance_type = "t2.micro"
       ssh_key       = file("worker-node.pub")
@@ -45,7 +45,7 @@ locals {
 variable "ec2-root-storage-size" {
   type        = number
   description = "The size of the root storage"
-  default     = 8
+  default     = 10
 }
 
 variable "env" {
