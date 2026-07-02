@@ -1,0 +1,8 @@
+[servers]
+dev-server-1 ansible_host=13.233.137.191
+dev-server-1 ansible_user=ubuntu
+
+[servers:vars]
+ansible_python_interpreter=auto_silent
+ansible_ssh_private_key_file=~/ansible-series/ansible-finally-makes-sense/lesson/infra/worker-node
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

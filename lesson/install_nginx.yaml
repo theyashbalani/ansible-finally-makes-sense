@@ -1,0 +1,20 @@
+---
+
+- name: Setup Nginx
+  hosts: worker-ubuntu
+  become: true
+
+  tasks:
+    - name: Install
+      apt:
+        name: nginx
+        state: present
+    - name: Start
+      systemd:
+        name: nginx
+        state: "started"
+        enabled: true
+
+      
+
+  

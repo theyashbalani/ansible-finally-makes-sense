@@ -1,0 +1,10 @@
+---
+
+- name: Greet Me!
+  hosts: servers
+  vars:
+    my_name: "Yash"
+  tasks:
+    - name: Say Hello to Me
+      debug: # prints variables, expressions, or custom messages during execution
+        msg: "Hello {{ my_name }}"

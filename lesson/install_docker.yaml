@@ -2,8 +2,8 @@
 
 - name: Setup Docker
   hosts: servers
-  become: yes  # sudo access granted
-  gather_facts: true # fetch metadat of the servers
+  become: true  # sudo access granted
+  gather_facts: true # fetch metadata of the servers
 
   tasks:
     - name: Upgrade all the Packages in Ubuntu
@@ -31,6 +31,7 @@
         - docker-buildx-plugin
         - docker-compose-plugin
         state: present
+        update_cache: true
       when: ansible_facts["distribution"] == "Ubuntu"
 #############
     - name: Upgrade all the Packages in RedHat

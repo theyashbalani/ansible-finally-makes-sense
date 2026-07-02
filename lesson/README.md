@@ -10,6 +10,7 @@
 - **Configuration File** is used to configure the playbooks. This file is kept on the control node in **Default Path** `/etc/ansible/ansible.cfg`
 - **Inventory** :- List of all managed nodes. These can be IP Addresses or Hostnames. **Inventory is optional**.
 - **host file (inventory.ini)** :- File to connect control node to worker node. It contains IP addresses of all the worker nodes.
+- **Dynamic Inventory** :- A system that allows Ansible to programmatically pull host and group data from external sources at runtime
 
 # Ansible Commands
 

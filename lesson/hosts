@@ -1,0 +1,13 @@
+[servers]
+worker-amazon ansible_host=52.66.237.138
+worker-redhat ansible_host=13.201.98.174
+worker-ubuntu ansible_host=13.233.137.191
+
+worker-amazon ansible_user=ec2-user
+worker-redhat ansible_user=ec2-user
+worker-ubuntu ansible_user=ubuntu
+
+[servers:vars]
+ansible_python_interpreter=auto_silent
+ansible_ssh_private_key_file=~/ansible-series/ansible-finally-makes-sense/lesson/infra/worker-node
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

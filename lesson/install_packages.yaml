@@ -1,0 +1,33 @@
+---
+
+- name: Install Packages
+  hosts: worker-ubuntu
+  become: true
+
+  vars: # variables
+    packages: # refer it while looping
+      - tree  # item1
+      - unzip # item2
+      - curl # item3
+      - apache2 # item4
+      - wget # item5
+      - net-tools # item6
+      - jq # item7
+      - zip # item8
+      - nginx # item9
+      
+  tasks:
+    - name: Install
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ packages }}" # looping through the packages
+      # - name: Start
+      #   systemd:
+      #     name: nginx
+      #     state: "started"
+      #     enabled: true
+
+      
+
+  

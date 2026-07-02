@@ -1,6 +1,3 @@
-resource "local_file" "ansible_hosts" {
-  filename = "${path.module}/../hosts"
-  content  = <<-EOT
 [servers]
 %{for name, instance in aws_instance.my-ubuntu-instance~}
 ${name}   ansible_host=${instance.public_ip}
@@ -12,7 +9,5 @@ ${name}   ansible_user=${local.ec2-instance_type[name].user}
 
 [servers:vars]
 ansible_python_interpreter=auto_silent
-ansible_ssh_private_key_file=~/ansible-series/ansible-finally-makes-sense/lesson/infra/worker-node
-ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-EOT
-}
+ansible_ssh_private_key_file=${ssh_private_key_file}
+ansible_ssh_common_args='${ssh_common_args}'
