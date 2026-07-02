@@ -7,7 +7,7 @@
 - **Managed Node** :- Where changes are to be done using Ansible. These are target servers.
 - **Playbook** is a set of instructions written in **YAML** files which are used to automate tasks on managed nodes. Imperative Blueprint.
 - **Idempotency**: If we run the same playbook multiple times, it will have the same effect.
-- **Configuration File** is used to configure the playbooks. This file is kept on the control node in **Default Path** `/etc/ansible/ansible.cfg`
+- **Configuration File** is used to configure the playbooks. This file is kept on the control node in **Global Path** `/etc/ansible/ansible.cfg`
 - **Inventory** :- List of all managed nodes. These can be IP Addresses or Hostnames. **Inventory is optional**.
 - **host file (inventory.ini)** :- File to connect control node to worker node. It contains IP addresses of all the worker nodes.
 - **Dynamic Inventory** :- A system that allows Ansible to programmatically pull host and group data from external sources at runtime
@@ -25,11 +25,13 @@
   > `-i` is for inventory file path\
   > `all` is for all the hosts in the inventory file
 
-- `ansible -i hosts <node> -a <shell-command> -v` when ad-hoc command is to be executed
+- `ansible -i hosts <node> -a <shell-command> -v --become` when ad-hoc command is to be executed
 
   > `-a` is for ad-hoc command
   > `<shell-command>` is the linux shell command to be executed on the managed nodes
   > `-v` increases the verbosity of the command
+  > `--become` is used to execute the command with root privileges
+  > `-k` is used to ask for the password
 
 - `ansible -i hosts <node> -m setup -v`
 
@@ -39,7 +41,19 @@
 
   > `playbook.yaml` is the name of the playbook
 
-- `ansible-playbook -i hosts playbook.yaml` when playbook is to be executed with inventory file
+- `ansible-playbook -i hosts playbook.yaml --check` when playbook is to be executed with inventory file
 
   > `-i` is for inventory file path
   > `playbook.yaml` is the name of the playbook
+  > `--check` is used to check the playbook without executing it, a dry run
+
+# Ansible Vault Commands
+
+- `ansible-vault encrypt <secrets-file> --vault-password-file <vault-password-file>` to encrypt a secrets file using vault password file
+- `ansible-playbook -i hosts <secrets-file> --vault-password-file <vault-password-file>` when playbook is to be executed with vault password file
+- `ansible-vault encrypt --ask-vault-pass <secrets-file>` to encrypt a secrets file by asking for the vault password
+- `ansible-vault decrypt --ask-vault-pass <secrets-file>` to decrypt a secrets file by asking for the vault password
+- `ansible-vault edit --ask-vault-pass <secrets-file>` to edit a secrets file by asking for the vault password
+- `ansible-vault view --ask-vault-pass <secrets-file>` to view a secrets file by asking for the vault password
+- `ansible-vault rekey --ask-vault-pass <secrets-file>` to rekey a secrets file by asking for the vault password
+- `ansible-vault create --ask-vault-pass <secrets-file>` to create a secrets file by asking for the vault password

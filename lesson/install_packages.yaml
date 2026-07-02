@@ -18,10 +18,15 @@
       
   tasks:
     - name: Install
+      loop: "{{ packages }}" # looping through the packages
       apt:
         name: "{{ item }}"
         state: present
-      loop: "{{ packages }}" # looping through the packages
+    - name: Show Message
+      loop: "{{ packages }}"
+      debug:
+          msg: "Installing {{ item }}"
+
       # - name: Start
       #   systemd:
       #     name: nginx

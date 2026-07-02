@@ -68,12 +68,12 @@ resource "aws_instance" "my-ubuntu-instance" {
 
   user_data_base64 = (
     each.value.os_type == "ubuntu" ? filebase64("${path.module}/../../installation/install-ansible.sh") :
-    each.value.os_type == "redhat" ? filebase64("${path.module}/../../installation/install-python.sh") : 
+    each.value.os_type == "redhat" ? filebase64("${path.module}/../../installation/install-python.sh") :
     null
   )
 
   root_block_device {
-    volume_size = var.env == "prd" ? 10 : var.ec2-root-storage-size # if condition ? then : else variable referenced
+    volume_size = var.env == "prd" ? 20 : var.ec2-root-storage-size # if condition ? then : else variable referenced
     volume_type = "gp3"                                             # gp3, gp2, io1, io2, st1, sc1, or standard
   }
 }
