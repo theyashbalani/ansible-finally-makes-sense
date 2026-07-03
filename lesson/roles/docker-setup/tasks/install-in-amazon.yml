@@ -1,0 +1,8 @@
+- name: Upgrade all the Packages in Amazon Linux
+  dnf:
+    name: "*"
+    state: latest
+- name: Install Docker in Amazon Linux
+  dnf:
+    name: docker
+    state: latest

@@ -1,0 +1,9 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles/docker-setup
+
+# docker_users: # users packaged in a role
+#   - ubuntu
+#   - ansible
+
+  

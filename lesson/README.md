@@ -11,6 +11,10 @@
 - **Inventory** :- List of all managed nodes. These can be IP Addresses or Hostnames. **Inventory is optional**.
 - **host file (inventory.ini)** :- File to connect control node to worker node. It contains IP addresses of all the worker nodes.
 - **Dynamic Inventory** :- A system that allows Ansible to programmatically pull host and group data from external sources at runtime
+- **Ansible Collection**: a distribution format for Ansible content that packages modules, plugins, roles, and playbooks. It allows for better organization, reuse, and sharing of Ansible content. It contains role files in a specific folder structure `etc/amsible/collections/`
+- **Ansible Vault** :- A tool to encrypt sensitive data such as passwords, keys, and tokens.
+- **Ansible Tower** :- (AWX) is a automation platform that provides additional features on top of Ansible, such as Web UI, RBAC, Inventory Management, Job Scheduling, etc.
+- **Ansible Semaphore** :- Open source job scheduler and RBAC controller for Ansible. It extends Ansible with an API, a web-based UI, and role-based access control.
 
 # Ansible Commands
 
@@ -37,6 +41,10 @@
 
   > `setup` is the module to fetch facts from the managed nodes
 
+- `ansible-inventory -i <host_file_path> --list` (or `--graph`) to list all the hosts in the inventory file
+
+# Ansible Playbook Commands
+
 - `ansible-playbook playbook.yaml` when playbook is to be executed without inventory file
 
   > `playbook.yaml` is the name of the playbook
@@ -53,7 +61,38 @@
 - `ansible-playbook -i hosts <secrets-file> --vault-password-file <vault-password-file>` when playbook is to be executed with vault password file
 - `ansible-vault encrypt --ask-vault-pass <secrets-file>` to encrypt a secrets file by asking for the vault password
 - `ansible-vault decrypt --ask-vault-pass <secrets-file>` to decrypt a secrets file by asking for the vault password
-- `ansible-vault edit --ask-vault-pass <secrets-file>` to edit a secrets file by asking for the vault password
-- `ansible-vault view --ask-vault-pass <secrets-file>` to view a secrets file by asking for the vault password
-- `ansible-vault rekey --ask-vault-pass <secrets-file>` to rekey a secrets file by asking for the vault password
-- `ansible-vault create --ask-vault-pass <secrets-file>` to create a secrets file by asking for the vault password
+
+# Ansible Roles
+
+- **Roles** :- Ansible roles allow you to organize and reuse Ansible playbooks. They create a ready to use template for other users to use your playbook
+- **Ansible Galaxy** :- Community marketplace for Ansible Roles.
+- **default**: default variables
+- **tasks**: list of tasks to be executed
+- **handlers**: run when task notify, to handle service restarts
+- **templates**: to create dynamic files, jinja templates
+- **vars**: variables
+- **files**: to copy paste files
+- **meta**: meta data about the role
+
+```
+├── README.md
+├── defaults
+│ └── main.yml
+├── files
+├── handlers
+│ └── main.yml
+├── meta
+│ └── main.yml
+├── tasks
+│ └── main.yml
+├── templates
+├── tests
+│ ├── inventory
+│ └── test.yml
+└── vars
+  └── main.yml
+```
+
+# Ansible Galaxy Commands
+
+- `ansible-galaxy init roles/<roles-name>` To create a roles directory

@@ -17,18 +17,17 @@
 # # EOT
 # # }
 
-# resource "local_file" "ansible_hosts" {
-#   filename        = "${path.module}/../inventory/${var.env}/hosts"
-#   file_permission = "0664"
-#   content = templatefile("${path.module}/inventory.tpl", {
-#     aws_instances = [
-#       for name, instance in aws_instance.my-ubuntu-instance : {
-#         name      = name
-#         public_ip = instance.public_ip
-#         user      = local.ec2-instance_type[name].user
-#       }
-#     ]
-#     ssh_private_key_file = "~/ansible-series/ansible-finally-makes-sense/lesson/infra/worker-node"
-#     ssh_common_args      = "-o StrictHostKeyChecking=no"
-#   })
-# }
+resource "local_file" "ansible_hosts" {
+  filename        = "${path.module}/../inventory/${var.env}/hosts"
+  file_permission = "0664"
+  content = templatefile("${path.module}/inventory.tpl", {
+    get_aws_instances = [
+      for name, instance in aws_instance.my-ubuntu-instance : {
+        name      = name
+        public_ip = instance.public_ip
+        user      = local.ec2-instance_type[name].user
+      }
+    ]
+    ssh_private_key_file = "~/ansible-series/ansible-finally-makes-sense/lesson/infra/worker-node"
+  })
+}

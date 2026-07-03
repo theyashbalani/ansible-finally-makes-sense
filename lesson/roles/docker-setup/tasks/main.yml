@@ -1,0 +1,37 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/docker-setup
+- name: OS-specific Docker Setup
+  include_tasks: "install-in-{{ ansible_facts['distribution'] | lower | replace (' ', '_') }}.yml"
+
+#  - name: Create a User
+#   user:
+#     name: "{{ item }}"
+#     state: present
+#   loop: "{{ docker_users }}"
+#   become: true 
+
+- name: Add user to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes # If we don't add this it will remove user from all other groups
+  loop: "{{ docker_users }}"
+  become: true
+  notify: # to notify handlers to trigger if there is any change in the state of the task
+    - Start and Enable Docker Daemon
+    - Restart Docker Daemon
+
+- name: Get Docker Version
+  shell: docker --version
+  register: docker_version
+
+- name: Display Docker Version
+  debug:
+    msg: "{{ docker_version.stdout }}"
+
+
+# - name: Reboot machine and send a message
+#   reboot:
+#     msg: "Rebooting machine in 5 seconds"
+
