@@ -14,7 +14,7 @@
 - **Ansible Collection**: a distribution format for Ansible content that packages modules, plugins, roles, and playbooks. It allows for better organization, reuse, and sharing of Ansible content. It contains role files in a specific folder structure `etc/amsible/collections/`
 - **Ansible Vault** :- A tool to encrypt sensitive data such as passwords, keys, and tokens.
 - **Ansible Tower** :- (AWX) is a automation platform that provides additional features on top of Ansible, such as Web UI, RBAC, Inventory Management, Job Scheduling, etc.
-- **Ansible Semaphore** :- Open source job scheduler and RBAC controller for Ansible. It extends Ansible with an API, a web-based UI, and role-based access control.
+- **Semaphore** :- Open source job scheduler and RBAC controller for Ansible. It extends Ansible with an API, a web-based UI, and role-based access control.
 
 # Ansible Commands
 
